@@ -22,17 +22,22 @@ method parse(Str $str) {
     my $cookie;
     for @.pairs -> $pair {
         next unless defined $pair.value;
-        if $pair.key ~~ /^ <-[ \\ \$ ]> / {
-            push @cookies, $cookie if $cookie.defined;
-            $cookie = self!build-cookie(
-                name  => $pair.key,
-                value => $pair.value,
-                version => $version,
-            );
-        } elsif $pair.key eq '$Path' {
-            $cookie.path = $pair.value;
-        } elsif $pair.key eq '$Domain' {
-            $cookie.domain = $pair.value;
+
+        given $pair.key {
+            when /^ <-[ \\ \$ ]> / {
+                push @cookies, $cookie if $cookie.defined;
+                $cookie = self!build-cookie(
+                    name  => $pair.key,
+                    value => $pair.value,
+                    version => $version,
+                );
+            }
+            when $pair.key eq '$Path' {
+                $cookie.path = $pair.value;
+            }
+            when '$Domain' {
+                $cookie.domain = $pair.value;
+            }
         }
     }
     push @cookies, $cookie if defined $cookie;

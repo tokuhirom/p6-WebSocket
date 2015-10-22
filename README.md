@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/tokuhirom/p6-Protocol-WebSocket.svg?branch=master)](https://travis-ci.org/tokuhirom/p6-Protocol-WebSocket)
+
 NAME
 ====
 

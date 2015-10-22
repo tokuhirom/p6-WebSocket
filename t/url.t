@@ -63,3 +63,5 @@ $url = Protocol::WebSocket::URL.new(
     port => 3000
 );
 is $url.Str, 'ws://foo.com:3000/';
+
+done-testing;
