@@ -7,7 +7,7 @@ subtest {
     my $f = WebSocket::Frame.new(
         opcode => WebSocket::Frame::CLOSE
     );
-    is-deeply $f.Buf, Buf.new(0x02, 0x00);
+    is-deeply $f.Buf, Buf.new(0x08, 0x00);
 }, 'close';
 
 subtest {
