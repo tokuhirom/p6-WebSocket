@@ -1,8 +1,8 @@
 use v6;
 
-use Protocol::WebSocket::Cookie;
+use WebSocket::Cookie;
 
-unit class Protocol::WebSocket::Cookie::Response is Protocol::WebSocket::Cookie;
+unit class WebSocket::Cookie::Response is WebSocket::Cookie;
 
 has $.name;
 has $.value;
@@ -48,12 +48,12 @@ method Str() {
 
 =head1 NAME
 
-Protocol::WebSocket::Cookie::Response - WebSocket Cookie Response
+WebSocket::Cookie::Response - WebSocket Cookie Response
 
 =head1 SYNOPSIS
 
     # Constructor
-    my $cookie = Protocol::WebSocket::Cookie::Response.new(
+    my $cookie = WebSocket::Cookie::Response.new(
         name    => 'foo',
         value   => 'bar',
         discard => 1,
@@ -62,7 +62,7 @@ Protocol::WebSocket::Cookie::Response - WebSocket Cookie Response
     $cookie.to_string; # foo=bar; Discard; Max-Age=0; Version=1
 
     # Parser
-    my $cookie = Protocol::WebSocket::Cookie::Response.new;
+    my $cookie = WebSocket::Cookie::Response.new;
     $cookie.parse('foo=bar; Discard; Max-Age=0; Version=1');
 
 =head1 DESCRIPTION

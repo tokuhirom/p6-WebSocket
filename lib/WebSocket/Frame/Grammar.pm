@@ -1,8 +1,8 @@
 use v6;
 
-unit grammar Protocol::WebSocket::Frame::Grammar;
+unit grammar WebSocket::Frame::Grammar;
 
-use Protocol::WebSocket::Frame;
+use WebSocket::Frame;
 
 # https://gist.github.com/smls/bc5d0fb42f199574e339
 
@@ -47,7 +47,7 @@ token TOP {
     <masking-key>
     <payload>
     {
-        $/.make: Protocol::WebSocket::Frame.new(
+        $/.make: WebSocket::Frame.new(
             |$/<hdr>.made,
             payload-len => $*PAYLOAD-LEN,
             payload => $*MASK ?? mask(~$/<payload>, $*MASKING-KEY) !! ~$/<payload>

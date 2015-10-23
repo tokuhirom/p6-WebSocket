@@ -1,7 +1,7 @@
 use v6;
-use Protocol::WebSocket::Cookie;
+use WebSocket::Cookie;
 
-unit class Protocol::WebSocket::Cookie::Request is Protocol::WebSocket::Cookie;
+unit class WebSocket::Cookie::Request is WebSocket::Cookie;
 
 has $.name is rw;
 has $.value is rw;
@@ -45,6 +45,6 @@ method parse(Str $str) {
 }
 
 method !build-cookie(*%args) {
-    Protocol::WebSocket::Cookie::Request.new(|%args)
+    WebSocket::Cookie::Request.new(|%args)
 }
 

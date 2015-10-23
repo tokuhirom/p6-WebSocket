@@ -1,6 +1,6 @@
 use v6;
 
-unit class Protocol::WebSocket::Stateful;
+unit class WebSocket::Stateful;
 
 enum State is export <STATE_BODY STATE_DONE>;
 

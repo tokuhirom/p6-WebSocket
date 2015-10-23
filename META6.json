@@ -1,15 +1,15 @@
 {
-  "name" : "Protocol::WebSocket",
+  "name" : "WebSocket",
   "source-url" : "git://github.com/tokuhirom/p6-Protocol-WebSocket.git",
   "perl" : "v6",
   "build-depends" : [ ],
   "provides" : {
-    "Protocol::WebSocket::Cookie::Response" : "lib/Protocol/WebSocket/Cookie/Response.pm6",
-    "Protocol::WebSocket::Stateful" : "lib/Protocol/WebSocket/Stateful.pm6",
-    "Protocol::WebSocket::Cookie::Request" : "lib/Protocol/WebSocket/Cookie/Request.pm6",
-    "Protocol::WebSocket::URL" : "lib/Protocol/WebSocket/URL.pm6",
-    "Protocol::WebSocket" : "lib/Protocol/WebSocket.pm6",
-    "Protocol::WebSocket::Cookie" : "lib/Protocol/WebSocket/Cookie.pm6"
+    "WebSocket::Cookie::Response" : "lib/Protocol/WebSocket/Cookie/Response.pm6",
+    "WebSocket::Stateful" : "lib/Protocol/WebSocket/Stateful.pm6",
+    "WebSocket::Cookie::Request" : "lib/Protocol/WebSocket/Cookie/Request.pm6",
+    "WebSocket::URL" : "lib/Protocol/WebSocket/URL.pm6",
+    "WebSocket" : "lib/Protocol/WebSocket.pm6",
+    "WebSocket::Cookie" : "lib/Protocol/WebSocket/Cookie.pm6"
   },
   "depends" : [ ],
   "description" : "blah blah blah",

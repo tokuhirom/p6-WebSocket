@@ -1,6 +1,6 @@
 use v6;
 
-unit class Protocol::WebSocket::URL;
+unit class WebSocket::URL;
 
 has Bool $.secure = False;
 has Str $.host;
@@ -15,7 +15,7 @@ grammar URLGrammar {
     token scheme { "ws" "s"? }
 }
 
-method parse(Protocol::WebSocket::URL:D: Str $string) {
+method parse(WebSocket::URL:D: Str $string) {
     my $m = URLGrammar.parse($string);
     if $m {
         $!secure = $m<scheme> eq 'wss';
@@ -45,21 +45,21 @@ method Str() {
 
 =head1 NAME
 
-Protocol::WebSocket::URL - WebSocket URL
+WebSocket::URL - WebSocket URL
 
 =head1 SYNOPSIS
 
 =begin code
 
     # Construct
-    my $url = Protocol::WebSocket::URL.new;
+    my $url = WebSocket::URL.new;
     $url.host('example.com');
     $url.port('3000');
     $url.secure(1);
     $url.Str; # wss://example.com:3000
 
     # Parse
-    my $url = Protocol::WebSocket::URL.new.parse('wss://example.com:3000');
+    my $url = WebSocket::URL.new.parse('wss://example.com:3000');
     $url.host;   # example.com
     $url.port;   # 3000
     $url.secure; # 1
@@ -84,7 +84,7 @@ Construct or parse a WebSocket URL.
 
 =head2 C<new>
 
-Create a new L<Protocol::WebSocket::URL> instance.
+Create a new L<WebSocket::URL> instance.
 
 =head2 C<parse>
 

@@ -1,20 +1,20 @@
 use v6;
-unit class Protocol::WebSocket;
+unit class WebSocket;
 
 
 =begin pod
 
 =head1 NAME
 
-Protocol::WebSocket - blah blah blah
+WebSocket - blah blah blah
 
 =head1 SYNOPSIS
 
-  use Protocol::WebSocket;
+  use WebSocket;
 
 =head1 DESCRIPTION
 
-Protocol::WebSocket is ...
+WebSocket is ...
 
 =head1 AUTHOR
 

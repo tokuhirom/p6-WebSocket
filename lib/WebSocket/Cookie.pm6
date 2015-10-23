@@ -1,5 +1,5 @@
 use v6;
-unit class Protocol::WebSocket::Cookie;
+unit class WebSocket::Cookie;
 
 has @.pairs is rw;
 
@@ -57,12 +57,12 @@ method Str() {
 
 =head1 NAME
 
-Protocol::WebSocket::Cookie - Base class for WebSocket cookies
+WebSocket::Cookie - Base class for WebSocket cookies
 
 =head1 DESCRIPTION
 
-A base class for L<Protocol::WebSocket::Cookie::Request> and
-L<Protocol::WebSocket::Cookie::Response>.
+A base class for L<WebSocket::Cookie::Request> and
+L<WebSocket::Cookie::Response>.
 
 =head1 ATTRIBUTES
 
@@ -72,7 +72,7 @@ L<Protocol::WebSocket::Cookie::Response>.
 
 =head2 C<new>
 
-Create a new L<Protocol::WebSocket::Cookie> instance.
+Create a new L<WebSocket::Cookie> instance.
 
 =head2 C<parse>
 

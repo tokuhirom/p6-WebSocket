@@ -3,17 +3,17 @@
 NAME
 ====
 
-Protocol::WebSocket - blah blah blah
+WebSocket - blah blah blah
 
 SYNOPSIS
 ========
 
-    use Protocol::WebSocket;
+    use WebSocket;
 
 DESCRIPTION
 ===========
 
-Protocol::WebSocket is ...
+WebSocket is ...
 
 AUTHOR
 ======

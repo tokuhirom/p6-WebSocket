@@ -1,9 +1,9 @@
 use v6;
 use Test;
-use Protocol::WebSocket::Frame::Grammar;
+use WebSocket::Frame::Grammar;
 
 subtest {
-    my $got = Protocol::WebSocket::Frame::Grammar.subparse("\xfA\x[01]a".encode('latin1').decode('latin1')).made;
+    my $got = WebSocket::Frame::Grammar.subparse("\xfA\x[01]a".encode('latin1').decode('latin1')).made;
     is-deeply $got.fin, True;
     is-deeply $got.rsv1, 1;
     is-deeply $got.rsv2, 1;
@@ -12,7 +12,7 @@ subtest {
 
 subtest {
     my $src = "\x[0A]\x[01]a".encode('latin1').decode('latin1');
-    my $got = Protocol::WebSocket::Frame::Grammar.subparse($src).made;
+    my $got = WebSocket::Frame::Grammar.subparse($src).made;
     is-deeply $got.fin, False;
     is-deeply $got.rsv1, 0;
     is-deeply $got.rsv2, 0;
@@ -21,12 +21,12 @@ subtest {
 }, 'falsy';
 
 subtest {
-    my $got = Protocol::WebSocket::Frame::Grammar.subparse("\x0A\x7e\x04\x05" ~ ('x' x 1029)).made;
+    my $got = WebSocket::Frame::Grammar.subparse("\x0A\x7e\x04\x05" ~ ('x' x 1029)).made;
     is $got.payload.chars, 1029;
 }, 'payload 126';
 
 subtest {
-    my $got = Protocol::WebSocket::Frame::Grammar.subparse("\x0A\x7f\x00\x00\x00\x00\x00\x00\x04\x05" ~ ('x' x 1029)).made;
+    my $got = WebSocket::Frame::Grammar.subparse("\x0A\x7f\x00\x00\x00\x00\x00\x00\x04\x05" ~ ('x' x 1029)).made;
     is $got.payload.chars, 1029;
 }, 'payload 127';
 
@@ -42,5 +42,8 @@ subtest {
 }, 'masked hello';
 
 sub parse($s) {
-    Protocol::WebSocket::Frame::Grammar.subparse($s).made;
+    WebSocket::Frame::Grammar.subparse($s).made;
 }
+
+done-testing;
+

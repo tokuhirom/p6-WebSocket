@@ -1,6 +1,6 @@
 use v6;
 
-unit class Protocol::WebSocket::Frame;
+unit class WebSocket::Frame;
 
 has $.fin;
 has $.rsv1;
