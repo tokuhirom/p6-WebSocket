@@ -16,7 +16,10 @@
     "WebSocket::Frame::Grammar" : "lib/WebSocket/Frame/Grammar.pm",
     "WebSocket::Cookie::Request" : "lib/WebSocket/Cookie/Request.pm6"
   },
-  "depends" : [ ],
+  "depends" : [
+    "Digest",
+    "MIME::Base64"
+  ],
   "description" : "WebSocket library for Perl6",
   "test-depends" : [ ],
   "version" : "*",
