@@ -1,0 +1,34 @@
+use v6;
+
+use WebSocket::Client;
+
+sub MAIN(Str $url) {
+    say "connecting to $url";
+    my $s = Supply.new;
+
+    Thread.start({
+        say "start websocket client thread";
+        WebSocket::Client.connect(
+            $url,
+            on-text => -> $h, $txt {
+                say "wow, got txt: $txt";
+                $h.send-text($txt.uc);
+            },
+            on-binary => -> $h, $txt {
+                say 'got binary data'
+            },
+            on-close => -> $h {
+                say 'on close'
+            },
+            on-ready => -> $h {
+                say 'on ready'
+            },
+        );
+    });
+
+    loop {
+        for $*IN.lines {
+            $s.emit($_); 
+        }
+    }
+}

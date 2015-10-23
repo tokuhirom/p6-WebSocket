@@ -11,6 +11,7 @@ constant PONG         = 0x0A;
 
 has Bool $.fin;
 has Int $.opcode;
+has $.masking-key is rw;
 has $.payload = Buf.new();
 
 method is-text()   { $.opcode == TEXT   }
@@ -19,25 +20,40 @@ method is-close()  { $.opcode == CLOSE  }
 method is-ping()   { $.opcode == PING   }
 method is-pong()   { $.opcode == PONG   }
 
+method is-control() { $.opcode ~~ CLOSE | PING | PONG }
+
 method Buf() {
     my Buf $s = pack('C', ((($!fin ?? 1 !! 0) +< 7) +| $.opcode));
     my $payload = $.payload ~~ Str ?? $.payload.encode('utf-8') !! $.payload;
+    my $masking-bit = $.masking-key.defined ?? 0x80 !! 0;
     given $payload.bytes {
         when $_ < 126 {
-            $s ~= pack 'C', $_;
+            $s ~= pack 'C', $_ + $masking-bit;
         }
         when $_ <= 0xffff {
-            $s ~= pack 'C', 126;
+            $s ~= pack 'C', 126 + $masking-bit;
             $s ~= pack 'n', $_;
         }
         default {
-            $s ~= pack 'C', 127;
+            $s ~= pack 'C', 127 + $masking-bit;
             $s ~= pack 'N', $_ +> 32;
             $s ~= pack 'N', $_ +& 0xffffffff;
         }
     }
-    $s ~= $payload;
+    if $!masking-key.defined {
+        $s ~= $!masking-key;
+        $s ~= mask($payload, $!masking-key.decode('latin1'));
+    } else {
+        $s ~= $payload;
+    }
     return $s;
+}
+
+sub mask(Blob $payload is copy, Str $mask is copy) {
+    $mask = $mask x (($payload.bytes / 4).Int + 1);
+    $mask = $mask.substr(0, $payload.bytes);
+    $payload = $payload ~^ $mask.encode('latin1');
+    return $payload;
 }
 
 # opcode is:

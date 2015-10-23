@@ -2,38 +2,49 @@ use v6;
 
 unit class WebSocket::URL;
 
-has Bool $.secure = False;
+has Str $.scheme = 'ws';
 has Str $.host;
 has Int $.port;
 has Str $.resource-name;
 
-grammar URLGrammar {
-    token TOP { <scheme> "://" <host> [ ":" <port> ]? <resource-name> }
-    token resource-name { .* }
-    token host { <-[ \: / ]>+ }
-    token port { <[ 0..9 ]>+ }
-    token scheme { "ws" "s"? }
+my class X::WebSocket::URL::Invalid {
+    has $.uri;
+    method message() {
+        "invalid websocket url: $.uri"
+    }
 }
 
-method parse(WebSocket::URL:D: Str $string) {
+my grammar URLGrammar {
+    token TOP { <scheme> "://" <host> [ ":" <port> ]? <resource-name> }
+    token scheme { "ws" "s"? }
+    token resource-name { .* }
+    token host { <-[ \: \/ ]>+ }
+    token port { <[ 0..9 ]>+ }
+}
+
+method parse(WebSocket::URL:U: Str $string) {
     my $m = URLGrammar.parse($string);
     if $m {
-        $!secure = $m<scheme> eq 'wss';
-        $!host = ~$m<host>;
-        $!port = $m<port> ?? $m<port>.Str.Int !! ($!secure ?? 443 !! 80);
-        $!resource-name = $m<resource-name> ?? $m<resource-name>.Str !! '/';
-        if $!resource-name eq '' {
-            $!resource-name = '/';
+        my $scheme = ~$m<scheme>;
+        my $port = $m<port> ?? $m<port>.Str.Int !! ($scheme eq 'wss' ?? 443 !! 80);
+        my $resource-name = $m<resource-name> ?? $m<resource-name>.Str !! '/';
+        if $resource-name eq '' {
+            $resource-name = '/';
         }
-        return True;
+        return WebSocket::URL.new(
+            scheme => $scheme,
+            host => ~$m<host>,
+            port => $port,
+            resource-name => $resource-name
+        );
     } else {
-        return False;
+        X::WebSocket::URL::Invalid.new(uri => $string).throw;
     }
 }
 
 method Str() {
     join("",
-        $!secure ?? "wss" !! "ws",
+        $!scheme,
         "://",
         $!host,
         $!port.defined ?? ":" ~ $!port !! "",

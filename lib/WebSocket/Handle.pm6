@@ -3,8 +3,11 @@ use v6;
 unit class WebSocket::Handle;
 
 use WebSocket::Frame;
+use WebSocket::SecureRandom;
 
 has $.socket is required;
+has $.masking;
+has $.random is rw;
 
 constant WS_DEBUG=so %*ENV<WS_DEBUG>;
 
@@ -13,6 +16,10 @@ sub debug($msg) {
 }
 
 method send(WebSocket::Frame $frame) {
+    if $.masking && !$frame.is-control {
+        $.random //= WebSocket::SecureRandom.new;
+        $frame.masking-key = $.random.read(4);
+    }
     my $buf = $frame.Buf;
     return $.socket.write($buf); # it returns promise
 }

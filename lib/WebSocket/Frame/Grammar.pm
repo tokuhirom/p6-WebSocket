@@ -30,7 +30,7 @@ use WebSocket::Frame;
 # in Perl6, bitwise shift operator is '+>' and '+<'.
 # Numeric bitwise and operator is '+&'
 
-sub mask($payload is copy, $mask is copy) {
+sub mask(Str $payload is copy, Str $mask is copy) {
     $mask = $mask x (($payload.chars / 4).Int + 1);
     $mask = $mask.substr(0, $payload.chars);
     $payload = "$payload" ~^ $mask;
