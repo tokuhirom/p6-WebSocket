@@ -28,7 +28,7 @@ my grammar HTTPResponseGrammar {
     token TOP { ^
         'HTTP/1.1 ' <status> ' ' <reason> <.crlf>
         [
-            <-[ \n \: ]>+ ':' <-[ \n \: ]>+ <.crlf>
+            <-[ \r \n \: ]>+ ':' <-[ \r \n ]>+ <.crlf>
         ]*
         <.crlf>
     }
@@ -40,13 +40,14 @@ my grammar HTTPResponseGrammar {
 }
 
 sub debug($msg) {
-    say "[DEBUG] $msg" if DEBUG;
+    say "WS::C [DEBUG] $msg" if DEBUG;
 }
 
 method connect(
     Str $url,
     Callable :$on-text,
     Callable :$on-binary,
+    Callable :$on-ready,
     Callable :$on-close
 ) {
     debug("parsing uri");
@@ -79,7 +80,6 @@ method connect(
         "",
         ''
     ].join("\x0d\x0a");
-    $res.perl.say;
     debug "writing request" if DEBUG;
     $socket.write($res.encode('latin1'));
 
@@ -110,6 +110,9 @@ method connect(
         socket => $socket,
         masking => True,
     );
+
+    $on-ready($handle) if $on-ready;
+
     while my $got2 = $socket.recv(:bin) {
         $buf ~= $got2.decode('latin1');
 

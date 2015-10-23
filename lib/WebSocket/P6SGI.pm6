@@ -10,7 +10,7 @@ use WebSocket::Frame::Grammar;
 constant WS_DEBUG=so %*ENV<WS_DEBUG>;
 
 sub debug($msg) {
-    say "[DEBUG] $msg";
+    say "WS:S: [DEBUG] $msg";
 }
 
 sub ws-psgi(%env, Callable :$on-ready, Callable :$on-text, Callable :$on-binary, Callable :$on-close) is export {
