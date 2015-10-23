@@ -60,11 +60,7 @@ token hdr {
     {
         my $c = $/[0].Str.ord;
         my %hdr = fin  => so(($c +> 7) +& 0x01),
-                 rsv1 => ($c +> 6) +& 0x01,
-                 rsv2 => ($c +> 5) +& 0x01,
-                 rsv3 => ($c +> 4) +& 0x01,
-                 opcode => $c +& 0x0f
-                 ;
+                 opcode => $c +& 0x0f;
         $/.make: %hdr;
     }
 }
