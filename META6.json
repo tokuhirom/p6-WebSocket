@@ -4,17 +4,20 @@
   "perl" : "v6",
   "build-depends" : [ ],
   "provides" : {
+    "WebSocket::P6SGI" : "lib/WebSocket/P6SGI.pm6",
+    "WebSocket::Handle" : "lib/WebSocket/Handle.pm6",
     "WebSocket::Frame" : "lib/WebSocket/Frame.pm",
     "WebSocket::Stateful" : "lib/WebSocket/Stateful.pm6",
     "WebSocket::Cookie::Response" : "lib/WebSocket/Cookie/Response.pm6",
     "WebSocket" : "lib/WebSocket.pm",
     "WebSocket::Cookie" : "lib/WebSocket/Cookie.pm6",
     "WebSocket::URL" : "lib/WebSocket/URL.pm6",
+    "WebSocket::Handshake" : "lib/WebSocket/Handshake.pm6",
     "WebSocket::Frame::Grammar" : "lib/WebSocket/Frame/Grammar.pm",
     "WebSocket::Cookie::Request" : "lib/WebSocket/Cookie/Request.pm6"
   },
   "depends" : [ ],
-  "description" : "blah blah blah",
+  "description" : "WebSocket library for Perl6",
   "test-depends" : [ ],
   "version" : "*",
   "authors" : [

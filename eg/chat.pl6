@@ -7,7 +7,7 @@ sub MAIN(Int :$port=80) {
     my $html = $=finish;
     $html ~~ s:g/'<<<PORT>>>'/$port/;
 
-    my %socks;
+    my $supply = Supply.new;
 
     my $s = HTTP::Server::Tiny.new(port => $port);
     $s.run(-> %env {
@@ -17,17 +17,18 @@ sub MAIN(Int :$port=80) {
                 200, [], [$html]
             }
             when '/echo2' {
-                my $id = ~ rand;
+                my $s;
 
                 ws-psgi(%env,
                     on-ready => -> $ws {
-                        %socks{$id} = $ws;
+                        $s = $supply.tap(-> $got {
+                            $ws.send-text("GOT: $got");
+                        });
                         say 'ready';
                     },
                     on-text => -> $ws, $txt {
-                        for %socks.values {
-                            .send-text: $txt
-                        }
+                        $supply.emit($txt);
+
                         say 'sent.';
                         if $txt eq 'quit' {
                             say 'close it!';
@@ -39,7 +40,7 @@ sub MAIN(Int :$port=80) {
                     },
                     on-close => -> $ws {
                         say "closing socket";
-                        %socks{$id}:delete;
+                        $s.close if $s;
                     },
                 );
             }
