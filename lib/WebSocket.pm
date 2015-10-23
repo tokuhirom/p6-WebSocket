@@ -6,15 +6,19 @@ unit class WebSocket;
 
 =head1 NAME
 
-WebSocket - blah blah blah
+WebSocket - WebSocket library for Perl6
 
 =head1 SYNOPSIS
 
-  use WebSocket;
+See WebSocket::P6SGI.
 
 =head1 DESCRIPTION
 
-WebSocket is ...
+WebSocket.pm is a libraary to write a WebSocket server.
+
+See WebSocket::P6SGI for more details.
+
+(I want to implement WebSocket client. But there is no motivation to write it...)
 
 =head1 AUTHOR
 

@@ -24,11 +24,11 @@ sub ws-psgi(%env, Callable :$on-ready, Callable :$on-text, Callable :$on-binary,
     die 'p6sgix.io must contain instance of IO::Socket::Async' unless $sock ~~ IO::Socket::Async;
 
     unless %env<HTTP_UPGRADE> ~~ 'websocket' {
-        warn 'no upgrade header';
+        warn 'no upgrade header in HTTP request';
         return bad-request
     }
     unless %env<HTTP_SEC_WEBSOCKET_VERSION> ~~ /^\d+$/ {
-        warn 'invalid websocket version';
+        warn "invalid websocket version... we don't support draft version of websocket.";
         return bad-request
     }
 
