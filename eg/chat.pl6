@@ -71,7 +71,7 @@ sub MAIN(Int :$port=80) {
             </form>
             <pre id="log"></pre>
         </section>
-        <footer>Powered by <a href="http://amon.64p.org/">Amon2::Lite</a></footer>
+        <footer>Powered by <a href="http://perl6.org/">Perl6</a></footer>
     </div>
     <script type="text/javascript">
         function log(msg) {
