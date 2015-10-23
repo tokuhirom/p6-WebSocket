@@ -18,7 +18,7 @@ WebSocket.pm is a libraary to write a WebSocket server.
 
 See WebSocket::P6SGI for more details.
 
-There is an example chat server. See eg/chat.psgi.
+There is an example chat server. See eg/chat.psgi https://github.com/tokuhirom/p6-WebSocket/blob/master/eg/chat.pl6.
 
 (I want to implement WebSocket client. But there is no motivation to write it...)
 
