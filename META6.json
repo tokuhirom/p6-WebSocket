@@ -7,20 +7,24 @@
     "WebSocket::P6SGI" : "lib/WebSocket/P6SGI.pm6",
     "WebSocket::Handle" : "lib/WebSocket/Handle.pm6",
     "WebSocket::Frame" : "lib/WebSocket/Frame.pm",
+    "WebSocket::SecureRandom" : "lib/WebSocket/SecureRandom.pm6",
     "WebSocket::Cookie::Response" : "lib/WebSocket/Cookie/Response.pm6",
     "WebSocket" : "lib/WebSocket.pm",
     "WebSocket::Cookie" : "lib/WebSocket/Cookie.pm6",
     "WebSocket::URL" : "lib/WebSocket/URL.pm6",
     "WebSocket::Handshake" : "lib/WebSocket/Handshake.pm6",
     "WebSocket::Frame::Grammar" : "lib/WebSocket/Frame/Grammar.pm",
-    "WebSocket::Cookie::Request" : "lib/WebSocket/Cookie/Request.pm6"
+    "WebSocket::Cookie::Request" : "lib/WebSocket/Cookie/Request.pm6",
+    "WebSocket::Client" : "lib/WebSocket/Client.pm6"
   },
   "depends" : [
     "Digest",
     "MIME::Base64"
   ],
   "description" : "WebSocket library for Perl6",
-  "test-depends" : [ ],
+  "test-depends" : [
+    "HTTP::Server::Tiny"
+  ],
   "version" : "*",
   "authors" : [
     "Tokuhiro Matsuno"
