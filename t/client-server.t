@@ -34,7 +34,7 @@ Thread.start({
             },
         );
     });
-});
+}, :app_lifetime);
 
 wait_port($port);
 
