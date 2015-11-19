@@ -149,5 +149,15 @@ WebSocket::P6SGI - P6SGI utility for WebSocket
 
 =head1 DESCRIPTION
 
+This module provides utility functions to create P6SGI application.
+
+=head1 FUNCTIONS
+
+=item C<ws-psgi(%env, Callable :$on-ready, Callable :$on-text, Callable :$on-binary, Callable :$on-close)>
+
+Create new P6SGI application from arguments.
+
+You can pass return value to P6SGI server.
+
 =end pod
 
