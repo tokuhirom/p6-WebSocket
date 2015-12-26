@@ -46,7 +46,7 @@ sub ws-psgi(%env, Callable :$on-ready, Callable :$on-text, Callable :$on-binary,
         Connection => 'Upgrade',
         Upgrade => 'websocket',
         Sec-WebSocket-Accept => $accept,
-    ], on -> \s { # } # vim sucks
+    ], supply -> \s { # } # vim sucks
         debug("handshake succeeded") if WS_DEBUG;
 
         my $handle = WebSocket::Handle.new(socket => $sock);
