@@ -129,7 +129,7 @@ method connect(
                     debug "got binary frame" if DEBUG;
                     $on-binary($handle, $frame.payload) if $on-binary;
                 }
-                when (WebSocket::Frame::CLOSE) {
+                when (WebSocket::Frame::DOCLOSE) {
                     debug "got close frame" if DEBUG;
                     $on-close($handle) if $on-close;
                     try $handle.close;

@@ -5,7 +5,7 @@ use WebSocket::Frame;
 
 subtest {
     my $f = WebSocket::Frame.new(
-        opcode => WebSocket::Frame::CLOSE
+        opcode => WebSocket::Frame::DOCLOSE
     );
     is-deeply $f.Buf, Buf.new(0x08, 0x00);
 }, 'close';

@@ -1,5 +1,5 @@
 use v6;
-
+use experimental :pack;
 use Test;
 
 use WebSocket::Cookie;

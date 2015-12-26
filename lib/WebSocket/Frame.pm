@@ -1,11 +1,12 @@
 use v6;
+use experimental :pack;
 
 unit class WebSocket::Frame;
 
 constant CONTINUATION = 0x00;
 constant TEXT         = 0x01;
 constant BINARY       = 0x02;
-constant CLOSE        = 0x08;
+constant DOCLOSE        = 0x08;
 constant PING         = 0x09;
 constant PONG         = 0x0A;
 
@@ -16,11 +17,11 @@ has $.payload = Buf.new();
 
 method is-text()   { $.opcode == TEXT   }
 method is-binary() { $.opcode == BINARY }
-method is-close()  { $.opcode == CLOSE  }
+method is-close()  { $.opcode == DOCLOSE  }
 method is-ping()   { $.opcode == PING   }
 method is-pong()   { $.opcode == PONG   }
 
-method is-control() { $.opcode ~~ CLOSE | PING | PONG }
+method is-control() { $.opcode ~~ DOCLOSE | PING | PONG }
 
 method Buf() {
     my Buf $s = pack('C', ((($!fin ?? 1 !! 0) +< 7) +| $.opcode));

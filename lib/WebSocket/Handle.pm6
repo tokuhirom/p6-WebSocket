@@ -35,7 +35,7 @@ method send-text(Str $msg) {
 method send-close() {
     self.send: WebSocket::Frame.new(
         fin => True,
-        opcode => WebSocket::Frame::CLOSE,
+        opcode => WebSocket::Frame::DOCLOSE,
     );
 }
 
