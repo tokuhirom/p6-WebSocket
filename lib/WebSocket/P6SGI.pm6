@@ -46,7 +46,7 @@ sub ws-psgi(%env, Callable :$on-ready, Callable :$on-text, Callable :$on-binary,
         Connection => 'Upgrade',
         Upgrade => 'websocket',
         Sec-WebSocket-Accept => $accept,
-    ], on -> \s { # } # vim sucks
+    ], supply -> \s { # } # vim sucks
         debug("handshake succeeded") if WS_DEBUG;
 
         my $handle = WebSocket::Handle.new(socket => $sock);
@@ -72,7 +72,7 @@ sub ws-psgi(%env, Callable :$on-ready, Callable :$on-text, Callable :$on-binary,
                             debug "got binary frame" if WS_DEBUG;
                             $on-binary($handle, $frame.payload) if $on-binary;
                         }
-                        when (WebSocket::Frame::CLOSE) {
+                        when (WebSocket::Frame::DOCLOSE) {
                             debug "got close frame" if WS_DEBUG;
                             $on-close($handle);
                             try $handle.close;
