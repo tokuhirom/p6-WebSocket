@@ -46,7 +46,7 @@ sub ws-psgi(%env, Callable :$on-ready, Callable :$on-text, Callable :$on-binary,
         Connection => 'Upgrade',
         Upgrade => 'websocket',
         Sec-WebSocket-Accept => $accept,
-    ], supply -> \s { # } # vim sucks
+    ], supply { 
         debug("handshake succeeded") if WS_DEBUG;
 
         my $handle = WebSocket::Handle.new(socket => $sock);
@@ -54,7 +54,7 @@ sub ws-psgi(%env, Callable :$on-ready, Callable :$on-text, Callable :$on-binary,
         $on-ready($handle);
 
         my $buf;
-        $sock.bytes-supply.tap(-> $got {
+        whenever $sock.Supply(:bin) -> $got {
             $buf ~= $got.decode('latin1');
 
             loop {
@@ -76,7 +76,7 @@ sub ws-psgi(%env, Callable :$on-ready, Callable :$on-text, Callable :$on-binary,
                             debug "got close frame" if WS_DEBUG;
                             $on-close($handle);
                             try $handle.close;
-                            s.done;
+                            done;
                         }
                         when (WebSocket::Frame::PING) {
                             debug "got ping frame" if WS_DEBUG;
@@ -85,6 +85,9 @@ sub ws-psgi(%env, Callable :$on-ready, Callable :$on-text, Callable :$on-binary,
                         when (WebSocket::Frame::PONG) {
                             debug "got pong frame" if WS_DEBUG;
                             # nop
+                        }
+                        default {
+                            debug "GOT $_";
                         }
                     }
                 } else {
@@ -95,10 +98,11 @@ sub ws-psgi(%env, Callable :$on-ready, Callable :$on-text, Callable :$on-binary,
             };
 
             CATCH { default {
+                say $_;
                 %env<p6sgi.errors>.print: "error in websocket processing: $_\n{.backtrace.full}";
-                s.done;
+                done;
             } }
-        });
+        };
 
         (); # on requires a callable that returns a list of pairs with Supply keys
     };
