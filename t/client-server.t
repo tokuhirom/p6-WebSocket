@@ -50,7 +50,6 @@ WebSocket::Client.connect(
         note 'got binary data'
     },
     on-close => -> $h {
-        note 'on close';
         ok 1, 'c: close';
     },
     on-ready => -> $h {
@@ -58,4 +57,5 @@ WebSocket::Client.connect(
         $h.send-text("STEP1");
     },
 );
+
 
