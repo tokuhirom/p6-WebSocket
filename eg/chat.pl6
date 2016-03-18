@@ -7,7 +7,8 @@ sub MAIN(Int :$port=80) {
     my $html = $=finish;
     $html ~~ s:g/'<<<PORT>>>'/$port/;
 
-    my $supply = Supply.new;
+    my $supplier = Supplier.new;
+    my $supply = $supplier.Supply;
 
     my $s = HTTP::Server::Tiny.new(port => $port);
     $s.run(-> %env {
@@ -27,7 +28,7 @@ sub MAIN(Int :$port=80) {
                         say 'ready';
                     },
                     on-text => -> $ws, $txt {
-                        $supply.emit($txt);
+                        $supplier.emit($txt);
 
                         say 'sent.';
                         if $txt eq 'quit' {
