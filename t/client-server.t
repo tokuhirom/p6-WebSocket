@@ -40,22 +40,25 @@ wait_port($port);
 
 note 'ready connect';
 
-WebSocket::Client.connect(
-    "ws://127.0.0.1:$port/",
-    on-text => -> $h, $txt {
-        is $txt, 'STEP2', 'c:text';
-        $h.send-close;
-    },
-    on-binary => -> $h, $txt {
-        note 'got binary data'
-    },
-    on-close => -> $h {
-        ok 1, 'c: close';
-    },
-    on-ready => -> $h {
-        ok 1, 'c: ready';
-        $h.send-text("STEP1");
-    },
+await Promise.anyof(
+  Promise.start({
+    WebSocket::Client.connect(
+        "ws://127.0.0.1:$port/",
+        on-text => -> $h, $txt {
+            is $txt, 'STEP2', 'c:text';
+            $h.send-close;
+        },
+        on-binary => -> $h, $txt {
+            note 'got binary data'
+        },
+        on-close => -> $h {
+            ok 1, 'c: close';
+        },
+        on-ready => -> $h {
+            ok 1, 'c: ready';
+            $h.send-text("STEP1");
+        },
+    )
+  }),
+  Promise.in(5).then( { fail "Test timed out!" } ),
 );
-
-
