@@ -3,3 +3,4 @@
 /src/Makefile
 /.panda-work
 /lib/.precomp/
+/t/lib/.precomp/
