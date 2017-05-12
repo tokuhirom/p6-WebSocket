@@ -14,7 +14,7 @@ plan 5;
 my $port = 15555;
 
 # server thread
-Thread.start({
+Promise.start: {
     note 'starting server';
     my $s = HTTP::Server::Tiny.new(port => $port);
     $s.run(-> %env {
@@ -33,8 +33,8 @@ Thread.start({
                 ok 1, 's: close';
             },
         );
-    });
-}, :app_lifetime);
+    })
+}
 
 wait_port($port);
 
@@ -56,6 +56,9 @@ await Promise.anyof(
         },
         on-ready => -> $h {
             ok 1, 'c: ready';
+            # Wait before sending the message to ensure the server handle setup is complete
+            # This behaviour seems to be related to HTTP::Server::Tiny
+            sleep 0.1;
             $h.send-text("STEP1");
         },
     )
