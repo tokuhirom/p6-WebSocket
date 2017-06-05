@@ -1,7 +1,7 @@
 use v6;
 
 use HTTP::Server::Tiny;
-use WebSocket::P6SGI;
+use WebSocket::P6W;
 
 sub MAIN(Int :$port=80) {
     my $html = $=finish;

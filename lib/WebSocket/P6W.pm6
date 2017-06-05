@@ -1,6 +1,6 @@
 use v6;
 
-unit class WebSocket::P6SGI;
+unit class WebSocket::P6W;
 
 use MIME::Base64;
 use WebSocket::Handle;
@@ -16,12 +16,12 @@ sub debug($msg) {
 sub ws-psgi(%env, Callable :$on-ready, Callable :$on-text, Callable :$on-binary, Callable :$on-close) is export {
     # use socket directly is bad idea. But HTTP/2 deprecates `connection: upgrade`. Then, this code may not
     # break on feature HTTP updates.
-    my $sock = %env<p6sgix.io>;
+    my $sock = %env<p6wx.io>;
 
     debug(%env.perl) if WS_DEBUG;
 
-    die 'no p6sgix.io in psgi env' unless $sock;
-    die 'p6sgix.io must contain instance of IO::Socket::Async' unless $sock ~~ IO::Socket::Async;
+    die 'no p6wx.io in psgi env' unless $sock;
+    die 'p6wx.io must contain instance of IO::Socket::Async' unless $sock ~~ IO::Socket::Async;
 
     unless %env<HTTP_UPGRADE> ~~ 'websocket' {
         warn 'no upgrade header in HTTP request';
@@ -99,7 +99,7 @@ sub ws-psgi(%env, Callable :$on-ready, Callable :$on-text, Callable :$on-binary,
 
             CATCH { default {
                 say $_;
-                %env<p6sgi.errors>.print: "error in websocket processing: $_\n{.backtrace.full}";
+                %env<p6w.errors>.print: "error in websocket processing: $_\n{.backtrace.full}";
                 done;
             } }
         };
@@ -120,14 +120,14 @@ sub bad-request() {
 
 =head1 NAME
 
-WebSocket::P6SGI - P6SGI utility for WebSocket
+WebSocket::P6W - P6W utility for WebSocket
 
 =head1 SYNOPSIS
 
 =begin code
 
     use HTTP::Server::Tiny;
-    use WebSocket::P6SGI;
+    use WebSocket::P6W;
 
     -> %env {
         ws-psgi(%env,
@@ -153,15 +153,15 @@ WebSocket::P6SGI - P6SGI utility for WebSocket
 
 =head1 DESCRIPTION
 
-This module provides utility functions to create P6SGI application.
+This module provides utility functions to create P6W application.
 
 =head1 FUNCTIONS
 
 =item C<ws-psgi(%env, Callable :$on-ready, Callable :$on-text, Callable :$on-binary, Callable :$on-close)>
 
-Create new P6SGI application from arguments.
+Create new P6W application from arguments.
 
-You can pass return value to P6SGI server.
+You can pass return value to P6W server.
 
 =end pod
 

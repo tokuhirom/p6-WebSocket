@@ -4,7 +4,7 @@ use Test;
 use lib 't/lib';
 
 use HTTP::Server::Tiny;
-use WebSocket::P6SGI;
+use WebSocket::P6W;
 use WebSocket::Client;
 
 use Test::TCP;
