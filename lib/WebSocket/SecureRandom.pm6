@@ -6,7 +6,7 @@ unit class WebSocket::SecureRandom;
 has $.fh;
 
 method new() {
-    my $fh = open '/dev/urandom', :r;
+    my $fh = open '/dev/urandom', :r, :bin;
     self.bless(fh => $fh);
 }
 
