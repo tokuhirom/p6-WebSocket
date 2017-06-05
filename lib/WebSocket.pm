@@ -10,13 +10,13 @@ WebSocket - WebSocket library for Perl6
 
 =head1 SYNOPSIS
 
-See WebSocket::P6SGI.
+See WebSocket::P6W.
 
 =head1 DESCRIPTION
 
 WebSocket.pm is a library to write a WebSocket server/client.
 
-See WebSocket::P6SGI for more details.
+See WebSocket::P6W for more details.
 
 There is an example chat server. See eg/chat.psgi https://github.com/tokuhirom/p6-WebSocket/blob/master/eg/chat.pl6.
 
