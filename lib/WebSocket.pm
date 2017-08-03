@@ -1,5 +1,5 @@
 use v6;
-unit class WebSocket;
+unit class WebSocket:ver<0.0.1>;
 
 
 =begin pod
