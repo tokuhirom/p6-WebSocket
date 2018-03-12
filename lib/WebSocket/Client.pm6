@@ -75,10 +75,9 @@ method connect(
         "Upgrade: websocket",
         "Connection: Upgrade",
         "Sec-WebSocket-Key: $key",
-        "Sec-WebSocket-Protocol: chat",
         "Sec-WebSocket-Version: 13",
         "",
-        ''
+        ""
     ].join("\x0d\x0a");
     debug "writing request" if DEBUG;
     $socket.write($res.encode('latin1'));
